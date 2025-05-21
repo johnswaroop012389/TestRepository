@@ -1,5 +1,3 @@
-package com.test.projectAPI;
-
 public class TestClass {
 
 	public static String runTest() {
