@@ -1,9 +1,15 @@
 public class TestClass {
 
-	public static String runTest() {
-		System.out.println("Executing automated test case...");
-		String expected = "pass";
-		String actual = "pass";
-		return expected.equals(actual) ? "Test Passed!" : "Test Failed!";
-	}
+    public static void main(String[] args) {
+        System.out.println("Executing automated test case...");
+        
+        String expected = "pass";
+        String actual = "pass";
+
+        if (expected.equals(actual)) {
+            System.out.println("Test Passed!");
+        } else {
+            System.out.println("Test Failed!");
+        }
+    }
 }
