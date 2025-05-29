@@ -1,0 +1,35 @@
+name: Run Java Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_target:
+        description: 'Which test to run'
+        required: true
+        default: 'both'
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Compile Java files
+        run: javac TestClass1.java TestClass2.java TestClass.java
+
+      - name: Run TestClass
+        run: java TestClass ${{ github.event.inputs.run_target }} > result.txt
+
+      - name: Upload results as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: result.txt
