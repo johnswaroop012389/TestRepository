@@ -22,7 +22,7 @@ public class TestClass {
                 break;
 
             default:
-                System.out.println("Invalid input. Use: Test1, Test2, or Both");
+                System.out.println("Invalid input. Use: TestClass1, TestClass2, or Both");
         }
     }
 }
