@@ -1,28 +1,23 @@
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 public class TestClass {
-    public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("Please provide input: TestClass1, TestClass2, or Both");
-            return;
-        }
+    public static void main(String[] args) throws Exception {
+        String runTarget = args.length > 0 ? args[0] : "both";
 
-        String input = args[0];
+        // Overwrite result.txt with header
+        PrintWriter writer = new PrintWriter("result.txt");
+        writer.println("== Java Test Execution Results ==");
+        writer.println("Run Target: " + runTarget);
+        writer.close();
 
-        switch (input.toLowerCase()) {
-            case "test1":
-                new TestClass1().test1_method();
-                break;
-
-            case "test2":
-                new TestClass2().test2_method();
-                break;
-
-            case "both":
-                new TestClass1().test1_method();
-                new TestClass2().test2_method();
-                break;
-
-            default:
-                System.out.println("Invalid input. Use: TestClass1, TestClass2, or Both");
+        if ("class1".equalsIgnoreCase(runTarget)) {
+            new TestClass1().run();
+        } else if ("class2".equalsIgnoreCase(runTarget)) {
+            new TestClass2().run();
+        } else {
+            new TestClass1().run();
+            new TestClass2().run();
         }
     }
 }
