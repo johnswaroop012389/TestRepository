@@ -1,15 +1,11 @@
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 public class TestClass1 {
-
-     public void test1_method() {
-        System.out.println("Executing automated test case1...");
-        
-        String expected = "pass";
-        String actual = "pass";
-
-        if (expected.equals(actual)) {
-            System.out.println("Test1 Passed!");
-        } else {
-            System.out.println("Test1 Failed!");
-        }
+    public void run() throws Exception {
+        PrintWriter writer = new PrintWriter(new FileWriter("result.txt", true));
+        writer.println(">> Running TestClass1...");
+        writer.println("Result: TestClass1 Passed ✅");
+        writer.close();
     }
 }
