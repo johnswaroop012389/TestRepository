@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       run_target:
-        description: 'Which test to run'
+        description: 'Which test to run (both, class1, class2)'
         required: true
         default: 'both'
 
@@ -14,25 +14,27 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
       - name: Compile Java files
         run: |
-          echo "Compiling Java files..."
-          javac TestClass1.java TestClass2.java TestClass.java
+          echo "🔧 Compiling Java files..."
+          javac TestClass.java TestClass1.java TestClass2.java
+          echo "✅ Compilation complete."
 
-      - name: Run TestClass and save output
+      - name: Run Java tests and save output
         run: |
-          echo "Running Java tests..."
+          echo "🚀 Running Java tests with target: ${{ github.event.inputs.run_target }}"
           java TestClass "${{ github.event.inputs.run_target }}" > result.txt
-          echo "----- Result File -----"
+          echo "📄 Contents of result.txt:"
           cat result.txt
+          echo "📁 Files in directory:"
           ls -la
 
       - name: Upload results as artifact
