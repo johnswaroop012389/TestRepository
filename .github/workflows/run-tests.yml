@@ -23,10 +23,17 @@ jobs:
           java-version: '17'
 
       - name: Compile Java files
-        run: javac TestClass1.java TestClass2.java TestClass.java
+        run: |
+          echo "Compiling Java files..."
+          javac TestClass1.java TestClass2.java TestClass.java
 
-      - name: Run TestClass
-        run: java TestClass ${{ github.event.inputs.run_target }} > result.txt
+      - name: Run TestClass and save output
+        run: |
+          echo "Running Java tests..."
+          java TestClass "${{ github.event.inputs.run_target }}" > result.txt
+          echo "----- Result File -----"
+          cat result.txt
+          ls -la
 
       - name: Upload results as artifact
         uses: actions/upload-artifact@v3
