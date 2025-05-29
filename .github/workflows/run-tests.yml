@@ -31,14 +31,17 @@ jobs:
       - name: Run Java tests and save output
         run: |
           echo "🚀 Running Java tests with target: ${{ github.event.inputs.run_target }}"
-          java TestClass "${{ github.event.inputs.run_target }}" > result.txt
-          echo "📄 Contents of result.txt:"
-          cat result.txt
+          TIMESTAMP=$(date +%s)
+          java TestClass "${{ github.event.inputs.run_target }}" > result-${{ github.event.inputs.run_target }}-${TIMESTAMP}.txt
+          echo "📄 Contents of result file:"
+          cat result-${{ github.event.inputs.run_target }}-${TIMESTAMP}.txt
           echo "📁 Files in directory:"
           ls -la
+          echo "RESULT_FILE=result-${{ github.event.inputs.run_target }}-${TIMESTAMP}.txt" >> $GITHUB_ENV
+          echo "TIMESTAMP=$TIMESTAMP" >> $GITHUB_ENV
 
       - name: Upload results as artifact
         uses: actions/upload-artifact@v4.3.1
         with:
-          name: test-results
-          path: result.txt
+          name: test-results-${{ github.event.inputs.run_target }}-${{ env.TIMESTAMP }}
+          path: ${{ env.RESULT_FILE }}
