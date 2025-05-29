@@ -1,7 +1,7 @@
 public class TestClass2 {
 
     public static void main(String[] args) {
-        System.out.println("Executing automated test2 case...");
+        System.out.println("Executing automated test case2...");
         
         String expected = "pass";
         String actual = "pass";
