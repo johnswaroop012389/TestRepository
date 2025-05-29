@@ -1,6 +1,6 @@
 public class TestClass2 {
 
-    public static void main(String[] args) {
+     public void test2_method() {
         System.out.println("Executing automated test case2...");
         
         String expected = "pass";
