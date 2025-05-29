@@ -8,6 +8,7 @@ public class TestClass {
         PrintWriter writer = new PrintWriter("result.txt");
         writer.println("== Java Test Execution Results ==");
         writer.println("Run Target: " + runTarget);
+        writer.println("DEBUG: runTarget (toLowerCase) = " + runTarget);
         writer.close();
 
         switch (runTarget) {
