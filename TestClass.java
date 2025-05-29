@@ -1,15 +1,28 @@
-public class TestClass {
-
+public class BaseClass {
     public static void main(String[] args) {
-        System.out.println("Executing automated test case...");
-        
-        String expected = "pass";
-        String actual = "pass";
+        if (args.length == 0) {
+            System.out.println("Please provide input: TestClass1, TestClass2, or Both");
+            return;
+        }
 
-        if (expected.equals(actual)) {
-            System.out.println("Test Passed!");
-        } else {
-            System.out.println("Test Failed!");
+        String input = args[0];
+
+        switch (input.toLowerCase()) {
+            case "test1":
+                new TestClass1().test1_method();
+                break;
+
+            case "test2":
+                new TestClass2().test2_method();
+                break;
+
+            case "both":
+                new TestClass1().test1_method();
+                new TestClass2().test2_method();
+                break;
+
+            default:
+                System.out.println("Invalid input. Use: Test1, Test2, or Both");
         }
     }
 }
