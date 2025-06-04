@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - id: set-run-name
+        run: echo "::set-output name=run_name::Run Java Tests - ${{ github.event.inputs.run_target }}"
+     
       - name: Checkout code
         uses: actions/checkout@v4
 
