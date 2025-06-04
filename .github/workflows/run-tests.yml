@@ -26,8 +26,7 @@ jobs:
         run: |
           echo "🔧 Compiling Java files..."
           mkdir -p out
-          find src -name "*.java" > sources.txt
-          javac -d out @sources.txt
+          javac -d out TestClass.java TestClass1.java TestClass2.java
           echo "✅ Compilation complete."
 
       - name: Run Java tests and save output
