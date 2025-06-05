@@ -51,25 +51,25 @@ public class BaseTest {
     @Test
     public void triggerTests() {
     	try {
-    		runTarget = System.getProperty("runTarget", "both").toLowerCase(); 
+    		runTarget = System.getProperty("runTarget", "all").toLowerCase(); 
 			writer.println("== Java Test Execution Results ==");
 			writer.println("Running " + runTarget);
 
 			switch (runTarget) {
-			case "class1":
+			case "test1":
 				new TC01().run();
 				break;
-			case "class2":
+			case "test2":
 				new TC02().run();
 				break;
-			case "both":
+			case "all":
 				new TC01().run();
 				new TC02().run();
 				break;
 			default:
 				PrintWriter errorWriter = new PrintWriter(new FileWriter("result.txt", true));
 				errorWriter.println("❌ Invalid input: " + runTarget);
-				errorWriter.println("Please use one of: class1, class2, both");
+				errorWriter.println("Please use one of: test1, test2, all");
 				errorWriter.close();
 				break;
 			}
