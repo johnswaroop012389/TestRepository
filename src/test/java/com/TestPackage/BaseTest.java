@@ -16,7 +16,7 @@ public class BaseTest {
 	@BeforeClass
     public void setup() throws FileNotFoundException {
 		writer = new PrintWriter("result.txt");
-        System.setProperty("webdriver.chrome.driver", "drivers/chromedriver");
+        io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://uat.qaconnector.com/Fintech/tenantLogin");
