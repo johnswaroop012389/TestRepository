@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.*;
 
 import java.io.IOException;
@@ -18,12 +19,18 @@ public class BaseTest {
 	
 	@BeforeClass
     public void setup() throws IOException  {
-		writer = new PrintWriter("result.txt");
-	Runtime.getRuntime().exec("pkill -f chromedriver");
-        Runtime.getRuntime().exec("pkill -f chrome");
-        io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
+	writer = new PrintWriter("result.txt");
 	    
-        driver = new ChromeDriver();
+	io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
+	   
+	ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");  // modern headless mode
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--remote-allow-origins=*");
+
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://uat.qaconnector.com/Fintech/tenantLogin");
         writer.print("Test Execution Started ");
