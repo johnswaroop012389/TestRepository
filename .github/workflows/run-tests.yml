@@ -28,21 +28,22 @@ jobs:
       - name: Convert emailable-report.html to results.txt
         run: |
           echo "📄 Converting emailable-report.html to results.txt"
-          if [ -f target/surefire-reports/emailable-report.html ]; then
-            cat target/surefire-reports/emailable-report.html > results.txt
+          if [ -f test-output/emailable-report.html ]; then
+            cat test-output/emailable-report.html > results.txt
           else
             echo "❌ emailable-report.html not found!" > results.txt
           fi
 
       - name: Print results.txt to GitHub Actions UI
-        run: |
-          echo "📤 Displaying test results:"
+        run: |          
           cat results.txt
+          echo "📁 Files in directory:"
+          ls -la
 
       - name: Upload TestNG Report
         uses: actions/upload-artifact@v4
         with:
           name: testng-report
           path: |
-            target/surefire-reports
+            test-output/
             results.txt
