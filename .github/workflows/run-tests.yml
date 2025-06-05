@@ -29,12 +29,13 @@ jobs:
 
       - name: Convert emailable-report.html to results.txt
         run: |
-          echo "📄 Converting emailable-report.html to results.txt"
-          if [ -f test-output/emailable-report.html ]; then
-            cat test-output/emailable-report.html > results.txt
-          else
-            echo "❌ emailable-report.html not found!" > results.txt
-          fi
+           echo "📄 Searching for emailable-report.html..."
+           REPORT=$(find . -name emailable-report.html | head -n 1)
+           if [ -f "$REPORT" ]; then
+             cat "$REPORT" > results.txt
+           else
+             echo "❌ emailable-report.html not found!" > results.txt
+           fi
 
       - name: Print results.txt to GitHub Actions UI
         run: |          
