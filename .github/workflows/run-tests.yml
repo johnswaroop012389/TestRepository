@@ -22,25 +22,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Compile Java files
-        run: |
-          echo "🔧 Compiling Java files..."
-          mkdir -p out
-          find src -name "*.java" > sources.txt
-          javac -d out @sources.txt
-          echo "✅ Compilation complete."
+      - name: Run Maven Tests
+        run: mvn test
 
-      - name: Run Java tests and save output
-        run: |
-          echo "🚀 Running Java tests with target: ${{ github.event.inputs.run_target }}"
-          java -cp out com.TestPackage.TC "${{ github.event.inputs.run_target }}" > result.txt
-          echo "📄 Contents of result.txt:"
-          cat result.txt
-          echo "📁 Files in directory:"
-          ls -la
-
-      - name: Upload results as artifact
-        uses: actions/upload-artifact@v4.3.1
+      - name: Upload TestNG Report
+        uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: result.txt
+          name: testng-report
+          path: target/surefire-reports
