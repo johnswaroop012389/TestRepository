@@ -11,6 +11,8 @@ public class TC01 {
     }
     
     public void run() throws Exception {
+        writer.println("🚀 TC01: Test started.");
         
+        writer.println("✅ TC01: Test completed.");
     }
 }
