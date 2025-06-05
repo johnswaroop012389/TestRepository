@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
 
-import org.openqa.selenium.chrome.ChromeOptions; // add this import
 
 public class BaseTest {
 	public static WebDriver driver;
