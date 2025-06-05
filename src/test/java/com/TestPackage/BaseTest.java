@@ -19,7 +19,7 @@ public class BaseTest {
 	
 	@BeforeClass
     public void setup() throws IOException  {
-	writer = new PrintWriter("result.txt");
+	writer = new PrintWriter("results.txt");
 	    
 	io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
 	   
