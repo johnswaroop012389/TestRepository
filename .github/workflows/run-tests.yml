@@ -24,31 +24,27 @@ jobs:
 
       - name: Run Maven Tests
         run: |
-           echo "running tests..."
-           mvn test -Dsurefire.suiteXmlFiles=testng.xml -DrunTarget=${{ github.event.inputs.run_target }}
+          echo "running tests..."
+          mvn test -Dsurefire.suiteXmlFiles=testng.xml -DrunTarget=${{ github.event.inputs.run_target }}
 
       - name: Extract summary from TestNG report
         run: |
-           echo "📄 Extracting summary from emailable-report.html..."
-           REPORT=$(find . -name emailable-report.html | head -n 1)
-           if [ -f "$REPORT" ]; then
-             {
-               echo "✅ Summary Report"
-               echo "---------------------------"
-               grep "<tr><td><a href=" "$REPORT" | \
-               sed -e 's/<[^>]*>//g' -e 's/^[ \t]*//' | \
-               awk '
-                 {
-                   print "Passed: " $2 " | Skipped: " $3 " | Failed: " $4
-                 }
-               '
-             } > results.txt
-           else
-             echo "❌ emailable-report.html not found!" > results.txt
-           fi
+          echo "📄 Extracting summary from emailable-report.html..."
+          REPORT=$(find . -name emailable-report.html | head -n 1)
+          if [ -f "$REPORT" ]; then
+            SUMMARY_LINE=$(grep -A1 "Total" "$REPORT" | tail -1 | sed -e 's/<[^>]*>/ /g' -e 's/^[ \t]*//;s/[ \t]*$//')
+            FAILED=$(echo "$SUMMARY_LINE" | awk '{print $4}')
+            if [ "$FAILED" = "0" ] || [ -z "$FAILED" ]; then
+              echo "✅ Summary Report - Passed" > results.txt
+            else
+              echo "✅ Summary Report - Failed" > results.txt
+            fi
+          else
+            echo "❌ emailable-report.html not found!" > results.txt
+          fi
 
       - name: Print results.txt to GitHub Actions UI
-        run: |          
+        run: |
           cat results.txt
           echo "📁 Files in directory:"
           ls -la
