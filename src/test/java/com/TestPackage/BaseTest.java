@@ -33,7 +33,6 @@ public class BaseTest {
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://uat.qaconnector.com/Fintech/tenantLogin");
-        writer.println("Test Execution Started ");
         writer.println("Launched"+ " https://uat.qaconnector.com/Fintech/tenantLogin "+ "Successufully");
     }
 
@@ -42,7 +41,6 @@ public class BaseTest {
         if (driver != null) {
             driver.quit();
             writer.println("Browser closed");
-            writer.print(runTarget + " Execution Ended ");
 	    writer.flush();  // Add this to flush buffer
             writer.close();  // Add this to close the writer properly
         }
@@ -52,18 +50,17 @@ public class BaseTest {
     public void triggerTests() {
     	try {
     		runTarget = System.getProperty("runTarget", "all").toLowerCase(); 
-			writer.println("Running " + runTarget);
 
 			switch (runTarget) {
 			case "test1":
-				new TC01().run();
+				new TC01(writer).run();
 				break;
 			case "test2":
-				new TC02().run();
+				new TC02(writer).run();
 				break;
 			case "all":
-				new TC01().run();
-				new TC02().run();
+				new TC01(writer).run();
+				new TC02(writer).run();
 				break;
 			default:
 				PrintWriter errorWriter = new PrintWriter(new FileWriter("result.txt", true));
