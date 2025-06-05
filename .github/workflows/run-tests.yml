@@ -23,7 +23,7 @@ jobs:
           java-version: '17'
 
       - name: Run Maven Tests
-        run: mvn test -DsuiteXmlFile=testng.xml
+        run: mvn test -DrunTarget=${{ github.event.inputs.run_target }}
 
       - name: Upload TestNG Report
         uses: actions/upload-artifact@v4
