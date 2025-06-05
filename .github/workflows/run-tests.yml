@@ -27,12 +27,19 @@ jobs:
            echo "running tests..."
            mvn test -Dsurefire.suiteXmlFiles=testng.xml -DrunTarget=${{ github.event.inputs.run_target }}
 
-      - name: Convert emailable-report.html to results.txt
+      - name: Extract summary from TestNG report
         run: |
-           echo "📄 Searching for emailable-report.html..."
+           echo "📄 Extracting summary from emailable-report.html..."
            REPORT=$(find . -name emailable-report.html | head -n 1)
            if [ -f "$REPORT" ]; then
-             cat "$REPORT" > results.txt
+             {
+               echo "✅ Summary Report"
+               echo "---------------------------"
+               grep -A1 "<tr><td><a href=" "$REPORT" | \
+               sed -e 's/<[^>]*>//g' -e 's/^[ \t]*//' | \
+               paste - - | \
+               awk -F '\t' '{printf "Test: %s | Passed: %s | Skipped: %s | Failed: %s\n", $1, $2, $3, $5}'
+             } > results.txt
            else
              echo "❌ emailable-report.html not found!" > results.txt
            fi
