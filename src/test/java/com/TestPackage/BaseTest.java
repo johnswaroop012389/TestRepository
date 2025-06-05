@@ -15,7 +15,7 @@ public class BaseTest {
 	public static String runTarget;
 	
 	@BeforeClass
-    public void setup() throws FileNotFoundException {
+    public void setup() throws IOException  {
 		writer = new PrintWriter("result.txt");
 	Runtime.getRuntime().exec("pkill -f chromedriver");
         Runtime.getRuntime().exec("pkill -f chrome");
