@@ -20,7 +20,7 @@ public class BaseTest {
 		writer = new PrintWriter("result.txt");
         io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
 
-	ChromeOptions options = new ChromeOptions()     
+	ChromeOptions options = new ChromeOptions(); 
         options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + System.currentTimeMillis());
         options.addArguments("--headless=new"); 
         options.addArguments("--no-sandbox");
