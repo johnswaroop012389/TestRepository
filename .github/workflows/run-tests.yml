@@ -38,7 +38,7 @@ jobs:
                grep -A1 "<tr><td><a href=" "$REPORT" | \
                sed -e 's/<[^>]*>//g' -e 's/^[ \t]*//' | \
                paste - - | \
-               awk -F '\t' '{printf "Test: %s | Passed: %s | Skipped: %s | Failed: %s\n", $1, $2, $3, $5}'
+               awk -F '\t' '{printf "Passed: %s | Skipped: %s | Failed: %s\n", $2, $3, $5}'
              } > results.txt
            else
              echo "❌ emailable-report.html not found!" > results.txt
