@@ -25,8 +25,24 @@ jobs:
       - name: Run Maven Tests
         run: mvn test -DrunTarget=${{ github.event.inputs.run_target }}
 
+      - name: Convert emailable-report.html to results.txt
+        run: |
+          echo "📄 Converting emailable-report.html to results.txt"
+          if [ -f target/surefire-reports/emailable-report.html ]; then
+            cat target/surefire-reports/emailable-report.html > results.txt
+          else
+            echo "❌ emailable-report.html not found!" > results.txt
+          fi
+
+      - name: Print results.txt to GitHub Actions UI
+        run: |
+          echo "📤 Displaying test results:"
+          cat results.txt
+
       - name: Upload TestNG Report
         uses: actions/upload-artifact@v4
         with:
           name: testng-report
-          path: target/surefire-reports
+          path: |
+            target/surefire-reports
+            results.txt
