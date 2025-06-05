@@ -4,6 +4,8 @@ import java.io.PrintWriter;
 
 public class TC02 {
 
+    private PrintWriter writer;
+    
     public TC02(PrintWriter writer) {
         this.writer = writer;
     }
