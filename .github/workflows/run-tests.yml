@@ -35,10 +35,13 @@ jobs:
              {
                echo "✅ Summary Report"
                echo "---------------------------"
-               grep -A1 "<tr><td><a href=" "$REPORT" | \
+               grep "<tr><td><a href=" "$REPORT" | \
                sed -e 's/<[^>]*>//g' -e 's/^[ \t]*//' | \
-               paste - - | \
-               awk -F '\t' '{printf "Passed: %s | Skipped: %s | Failed: %s\n", $2, $3, $5}'
+               awk '
+                 {
+                   print "Passed: " $2 " | Skipped: " $3 " | Failed: " $4
+                 }
+               '
              } > results.txt
            else
              echo "❌ emailable-report.html not found!" > results.txt
