@@ -26,13 +26,14 @@ jobs:
         run: |
           echo "🔧 Compiling Java files..."
           mkdir -p out
-          javac -d out TestClass.java TestClass1.java TestClass2.java
+          find src -name "*.java" > sources.txt
+          javac -d out @sources.txt
           echo "✅ Compilation complete."
 
       - name: Run Java tests and save output
         run: |
           echo "🚀 Running Java tests with target: ${{ github.event.inputs.run_target }}"
-          java -cp out com.TestPackage.TestClass "${{ github.event.inputs.run_target }}" > result.txt
+          java -cp out com.TestPackage.TC "${{ github.event.inputs.run_target }}" > result.txt
           echo "📄 Contents of result.txt:"
           cat result.txt
           echo "📁 Files in directory:"
