@@ -9,7 +9,8 @@ public class TC02 {
     }
     
     public void run() throws Exception {
-
+        writer.println("🚀 TC02: Test started.");
         
+        writer.println("✅ TC02: Test completed.");        
     }
 }
