@@ -43,6 +43,8 @@ public class BaseTest {
             driver.quit();
             writer.println("Browser closed");
             writer.print("Test Execution Ended ");
+	    writer.flush();  // Add this to flush buffer
+            writer.close();  // Add this to close the writer properly
         }
     }
     
