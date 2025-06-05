@@ -18,13 +18,9 @@ public class BaseTest {
 	@BeforeClass
     public void setup() throws FileNotFoundException {
 		writer = new PrintWriter("result.txt");
+	Runtime.getRuntime().exec("pkill -f chromedriver");
+        Runtime.getRuntime().exec("pkill -f chrome");
         io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
-
-	ChromeOptions options = new ChromeOptions(); 
-        options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + System.currentTimeMillis());
-        options.addArguments("--headless=new"); 
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
 	    
         driver = new ChromeDriver();
         driver.manage().window().maximize();
