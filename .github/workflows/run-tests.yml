@@ -35,12 +35,12 @@ jobs:
             SUMMARY_LINE=$(grep -A1 "Total" "$REPORT" | tail -1 | sed -e 's/<[^>]*>/ /g' -e 's/^[ \t]*//;s/[ \t]*$//')
             FAILED=$(echo "$SUMMARY_LINE" | awk '{print $4}')
             if [ "$FAILED" = "0" ] || [ -z "$FAILED" ]; then
-              echo "✅ Summary Report - Passed" > results.txt
+              echo "✅ Summary Report - Passed" > summary.txt
             else
-              echo "✅ Summary Report - Failed" > results.txt
+              echo "✅ Summary Report - Failed" > summary.txt
             fi
           else
-            echo "❌ emailable-report.html not found!" > results.txt
+            echo "❌ emailable-report.html not found!" > summary.txt
           fi
 
       - name: Print results.txt to GitHub Actions UI
@@ -56,3 +56,4 @@ jobs:
           path: |
             test-output/
             results.txt
+            summary.txt
