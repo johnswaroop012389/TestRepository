@@ -23,7 +23,9 @@ jobs:
           java-version: '17'
 
       - name: Run Maven Tests
-        run: mvn test -DrunTarget=${{ github.event.inputs.run_target }}
+        run: |
+           echo "running tests..."
+           mvn test -Dsurefire.suiteXmlFiles=testng.xml -DrunTarget=${{ github.event.inputs.run_target }}
 
       - name: Convert emailable-report.html to results.txt
         run: |
