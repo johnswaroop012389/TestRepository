@@ -35,14 +35,14 @@ public class BaseTest {
 		writer.println("Launched" + " https://uat.qaconnector.com/Fintech/tenantLogin " + "Successufully");
 
 		driver.findElement(By.name("user_name")).sendKeys("amith.nadig");
-		writer.println("Username Entered Successufully");
+		writer.println("Username Entered Successfully");
 		driver.findElement(By.name("password")).sendKeys("ViratKohli@123");
-		writer.println("Password Entered Successufully");
+		writer.println("Password Entered Successfully");
 		driver.findElement(By.id("Login_loginbtn__7Tj03")).click();
-		writer.println("Clicked on Login Successufully");
+		writer.println("Clicked on Login Successfully");
 		Thread.sleep(2000);
 		Assert.assertTrue(driver.findElements(By.className("landingPage_companyName__2RiNM")).size() > 0, "Element not found!");
-		writer.println("Homepage Loaded Successufully");
+		writer.println("Homepage Loaded Successfully");
 	}
 
 	@AfterClass
