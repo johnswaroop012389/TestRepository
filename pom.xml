@@ -52,11 +52,7 @@
 				<configuration>
 					<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
-					<property>
-						<name>listener</name>
-						<value>org.testng.reporters.EmailableReporter2</value>
-					</property>
+					</suiteXmlFiles>					
 				</configuration>
 			</plugin>
 		</plugins>
