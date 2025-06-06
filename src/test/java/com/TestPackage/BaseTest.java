@@ -34,6 +34,16 @@ public class BaseTest {
         driver.manage().window().maximize();
         driver.get("https://uat.qaconnector.com/Fintech/tenantLogin");
         writer.println("Launched"+ " https://uat.qaconnector.com/Fintech/tenantLogin "+ "Successufully");
+
+	driver.findElement(By.name("user_name")).sendKeys("amith.nadig");
+	writer.println("Username Entered Successufully");
+	driver.findElement(By.name("password")).sendKeys("ViratKohli@123");
+	writer.println("Password Entered Successufully");
+	driver.findElement(By.id("Login_loginbtn__7Tj03")).click();
+	writer.println("Clicked on Login Successufully");
+	Assert.assertEquals(driver.getTitle(), "Fintech Solutions");
+	writer.println("Homepage Loaded Successufully");
+
     }
 
     @AfterClass
