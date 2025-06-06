@@ -4,13 +4,15 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.*;
 
-import java.io.IOException;
+import org.testng.Assert;
 
+import java.io.IOException;
 
 public class BaseTest {
 	public static WebDriver driver;
