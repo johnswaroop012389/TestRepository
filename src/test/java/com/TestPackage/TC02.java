@@ -1,6 +1,8 @@
 package com.TestPackage;
 import java.io.PrintWriter;
 
+import org.openqa.selenium.WebDriver;
+
 public class TC02 {
 
     private PrintWriter writer;
@@ -9,7 +11,7 @@ public class TC02 {
         this.writer = writer;
     }
     
-    public void run() throws Exception {
+    public void run(WebDriver driver) throws Exception {
         writer.println("🚀 TC02: Test started.");
         
         writer.println("✅ TC02: Test completed.");        
