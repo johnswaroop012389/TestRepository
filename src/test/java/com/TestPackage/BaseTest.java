@@ -20,8 +20,7 @@ public class BaseTest {
 	public void setup() throws Exception {
 		writer = new PrintWriter("results.txt");
 
-		io.github.bonigarcia.wdm.WebDriverManager.getInstance().chromedriver().setup();
-		//io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
+		io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
 
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--headless=new"); // modern headless mode
