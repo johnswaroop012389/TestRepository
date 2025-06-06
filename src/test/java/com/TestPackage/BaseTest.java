@@ -43,9 +43,9 @@ public class BaseTest {
 	writer.println("Password Entered Successufully");
 	driver.findElement(By.id("Login_loginbtn__7Tj03")).click();
 	writer.println("Clicked on Login Successufully");
-	Assert.assertEquals(driver.getTitle(), "Fintech Solutions");
+	String actualText = driver.findElement(By.className("landingPage_companyName__2RiNM")).getText();
+	Assert.assertTrue(actualText.contains("Fintech Solutions"));
 	writer.println("Homepage Loaded Successufully");
-
     }
 
     @AfterClass
