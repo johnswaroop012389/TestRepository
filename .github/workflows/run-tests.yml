@@ -23,10 +23,12 @@ jobs:
           java-version: '17'
 
       - name: Run Maven Tests
+        id: run-tests
         continue-on-error: true
         run: |
           echo "running tests..."
           mvn test -Dsurefire.suiteXmlFiles=testng.xml -DrunTarget=${{ github.event.inputs.run_target }}
+          echo "status=$?" >> $GITHUB_OUTPUT
 
       - name: Extract summary from TestNG report
         run: |
@@ -58,3 +60,9 @@ jobs:
             test-output/
             results.txt
             summary.txt
+
+      - name: Fail job if tests failed
+        if: steps.run-tests.outputs.status != '0'
+        run: |
+          echo "❌ Tests failed. Marking job as failed."
+          exit 1
