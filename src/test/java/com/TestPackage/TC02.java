@@ -19,6 +19,7 @@ public class TC02 {
         driver.findElement(By.xpath("//span[contains(text(), 'Edit Project')]")).click();
         Thread.sleep(2000);
         Assert.assertTrue(driver.findElements(By.xpath("//span[contains(text(), 'Update')]")).size() > 0, "Expected element not found!");
+        writer.println("Update Button Presence Verified");
         writer.println("✅ TC02: Test completed.");        
     }
 }
