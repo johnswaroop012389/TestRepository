@@ -21,7 +21,7 @@ public class TC01 {
         Assert.assertTrue(driver.findElements(By.xpath("//span[contains(text(), 'Test Plans')]")).size() > 0, "Expected element not found!");
         Assert.assertTrue(driver.findElements(By.xpath("//span[contains(text(), 'Test Execution')]")).size() > 0, "Expected element not found!");
         Assert.assertTrue(driver.findElements(By.xpath("//span[contains(text(), 'Defects')]")).size() > 0, "Expected element not found!");
-        Assert.assertTrue(driver.findElements(By.xpath("//span[contains(text(), 'Admin111')]")).size() > 0, "Expected element not found!"); 
+        Assert.assertTrue(driver.findElements(By.xpath("//span[contains(text(), 'Admin')]")).size() > 0, "Expected element not found!"); 
         writer.println("Dashboard Elements Visibility Verified");
         writer.println("✅ TC01: Test completed.");
     }
