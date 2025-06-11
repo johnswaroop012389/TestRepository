@@ -1,0 +1,15 @@
+[32m[PASS] Launched https://uat.qaconnector.com/Fintech/tenantLogin Successufully[0m
+[32m[PASS] Username Entered Successfully[0m
+[32m[PASS] Password Entered Successfully[0m
+[32m[PASS] Clicked on Login Successfully[0m
+[32m[PASS] Homepage Loaded Successfully[0m
+[32m[PASS] 🚀 TC01: Test started.[0m
+[32m[PASS] Dashboard is visible[0m
+[32m[PASS] Projects is visible[0m
+[32m[PASS] Test Bank is visible[0m
+[32m[PASS] Test Plans is visible[0m
+[32m[PASS] Test Execution is visible[0m
+[32m[PASS] Defects is visible[0m
+[32m[PASS] Admin is visible[0m
+[32m[PASS] ✅ TC01: Test completed.[0m
+[32m[PASS] Browser closed[0m
