@@ -1,0 +1,14 @@
+[PASS] Launched https://uat.qaconnector.com/Fintech/tenantLogin Successufully
+[PASS] Username Entered Successfully
+[PASS] Password Entered Successfully
+[PASS] Clicked on Login Successfully
+[PASS] Homepage Loaded Successfully
+[PASS] 🚀 TC02: Test started.
+[PASS] Click on Flood Renewals
+[FAIL] Click on Edit Project - Expected condition failed: waiting for element to be clickable: By.xpath: //span[contains(text(), 'Edit Project')] (tried for 10 second(s) with 500 milliseconds interval)
+Build info: version: '4.3.0', revision: 'a4995e2c09*'
+System info: host: 'fv-az1391-154', ip: '10.1.0.249', os.name: 'Linux', os.arch: 'amd64', os.version: '6.11.0-1015-azure', java.version: '17.0.15'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 137.0.7151.68, chrome: {chromedriverVersion: 137.0.7151.70 (dfa4dc56b2ab..., userDataDir: /tmp/.org.chromium.Chromium...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:34293}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: LINUX, proxy: Proxy(), se:cdp: ws://localhost:34293/devtoo..., se:cdpVersion: 137.0.7151.68, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: c4927ee846bbeb5f76d73469fedc3814
+[PASS] Browser closed
