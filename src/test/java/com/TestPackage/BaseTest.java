@@ -19,6 +19,7 @@ public class BaseTest {
 	@BeforeClass
 	public void setup() throws Exception {
 		writer = new PrintWriter("results.txt");
+		TestLogger.setWriter(writer); // register writer
 
 		io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
 
@@ -31,25 +32,41 @@ public class BaseTest {
 
 		driver = new ChromeDriver(options);
 		driver.manage().window().maximize();
-		driver.get("https://uat.qaconnector.com/Fintech/tenantLogin");
-		writer.println("Launched" + " https://uat.qaconnector.com/Fintech/tenantLogin " + "Successufully");
+		
+		//Launch Url 
+		TestLogger.logStep("Launched" + " https://uat.qaconnector.com/Fintech/tenantLogin " + "Successufully", () -> {
+			driver.get("https://uat.qaconnector.com/Fintech/tenantLogin");
+		});
 
-		driver.findElement(By.name("user_name")).sendKeys("amith.nadig");
-		writer.println("Username Entered Successfully");
-		driver.findElement(By.name("password")).sendKeys("ViratKohli@123");
-		writer.println("Password Entered Successfully");
-		driver.findElement(By.id("Login_loginbtn__7Tj03")).click();
-		writer.println("Clicked on Login Successfully");
+		// Enter username 
+		TestLogger.logStep("Username Entered Successfully", () -> {
+			driver.findElement(By.name("user_name")).sendKeys("amith.nadig");
+		});
+		
+		// Enter password
+		TestLogger.logStep("Password Entered Successfully", () -> {
+			driver.findElement(By.name("password")).sendKeys("ViratKohli@123");
+		});
+		
+		// Click on login button 
+		TestLogger.logStep("Clicked on Login Successfully", () -> {
+			driver.findElement(By.id("Login_loginbtn__7Tj03")).click();
+		});
 		Thread.sleep(2000);
-		Assert.assertTrue(driver.findElements(By.className("landingPage_companyName__2RiNM")).size() > 0, "Element not found!");
-		writer.println("Homepage Loaded Successfully");
+		
+		// Page loaded successfully
+		TestLogger.logStep("Homepage Loaded Successfully", () -> {
+			Assert.assertTrue(driver.findElements(By.className("landingPage_companyName__2RiNM")).size() > 0,
+					"Element not found!");
+		});
 	}
 
 	@AfterClass
 	public void teardown() {
 		if (driver != null) {
-			driver.quit();
-			writer.println("Browser closed");
+			TestLogger.logStep("Browser closed", () -> {
+				driver.quit();
+			});
 			writer.flush(); // Add this to flush buffer
 			writer.close(); // Add this to close the writer properly
 		}
