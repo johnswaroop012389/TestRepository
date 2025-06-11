@@ -27,23 +27,7 @@ jobs:
         run: |
           echo "running tests..."
           mvn test -Dsurefire.suiteXmlFiles=testng.xml -DrunTarget=${{ github.event.inputs.run_target }}
-
-      - name: Extract summary from TestNG report
-        run: |
-          echo "📄 Extracting summary from emailable-report.html..."
-          REPORT=$(find . -name emailable-report.html | head -n 1)
-          if [ -f "$REPORT" ]; then
-            SUMMARY_LINE=$(grep -A1 "Total" "$REPORT" | tail -1 | sed -e 's/<[^>]*>/ /g' -e 's/^[ \t]*//;s/[ \t]*$//')
-            FAILED=$(echo "$SUMMARY_LINE" | awk '{print $4}')
-            if [ "$FAILED" = "0" ] || [ -z "$FAILED" ]; then
-              echo "✅ Summary Report - Passed" > summary.txt
-            else
-              echo "✅ Summary Report - Failed" > summary.txt
-            fi
-          else
-            echo "❌ emailable-report.html not found!" > summary.txt
-          fi
-
+      
       - name: Print results.txt to GitHub Actions UI
         run: |
           cat results.txt
@@ -56,5 +40,4 @@ jobs:
           name: testng-report
           path: |
             test-output/
-            results.txt
-            summary.txt
+            results.txt    
