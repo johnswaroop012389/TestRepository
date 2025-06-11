@@ -69,13 +69,14 @@ jobs:
 
       - name: Push reports to GitHub Pages
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git clone --branch gh-pages https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git gh-pages
+          git clone --branch gh-pages https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git gh-pages
+          mkdir -p gh-pages/reports
           cp -r reports/* gh-pages/reports/
           cd gh-pages
           git add .
           git commit -m "Update reports at $(date)" || echo "No changes to commit"
-          git push
+          git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git gh-pages
