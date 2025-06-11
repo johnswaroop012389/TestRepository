@@ -1,6 +1,5 @@
 package com.TestPackage;
 
-import java.io.PrintWriter;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
@@ -11,14 +10,8 @@ import org.testng.Assert;
 
 public class TC02 {
 
-	private PrintWriter writer;
-
-	public TC02(PrintWriter writer) {
-		this.writer = writer;
-	}
-
 	public void run(WebDriver driver) throws Exception {
-		writer.println("🚀 TC02: Test started.");
+		TestLogger.logPass("🚀 TC02: Test started.");
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
 		TestLogger.logStep("Click on Flood Renewals", () -> {
@@ -36,6 +29,6 @@ public class TC02 {
 					"Expected element not found!");
 		});
 
-		writer.println("✅ TC02: Test completed.");
+		TestLogger.logPass("✅ TC02: Test completed.");
 	}
 }
