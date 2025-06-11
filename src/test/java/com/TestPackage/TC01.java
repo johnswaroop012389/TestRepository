@@ -1,5 +1,4 @@
 package com.TestPackage;
-import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -9,14 +8,8 @@ import org.testng.Assert;
 
 public class TC01 {
 
-    private PrintWriter writer;
-
-    public TC01(PrintWriter writer) {
-        this.writer = writer;
-    }
-    
     public void run(WebDriver driver) throws Exception {
-    	writer.println("🚀 TC01: Test started.");
+    	TestLogger.logPass("🚀 TC01: Test started.");
     	Map<String, String> validations = new LinkedHashMap<>();
     	validations.put("Dashboard is visible", "//span[contains(text(), 'Dashboard')]");
     	validations.put("Projects is visible", "//span[contains(text(), 'Projects')]");
@@ -34,6 +27,6 @@ public class TC01 {
     	        Assert.assertTrue(driver.findElements(By.xpath(xpath)).size() > 0, "Expected element not found: " + label);
     	    });
     	}
-        writer.println("✅ TC01: Test completed.");
+    	TestLogger.logPass("✅ TC01: Test completed.");
     }
 }
