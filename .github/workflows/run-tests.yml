@@ -30,17 +30,20 @@ jobs:
 
       - name: Print results.txt to GitHub Actions UI
         run: |
+          echo "📄 Printing results.txt:"
           cat results.txt || echo "results.txt not found"
-          echo "📁 Files in directory:"
+          echo "📁 Listing files in directory:"
           ls -la
 
       - name: Prepare report folder with timestamp
+        id: report-setup
         run: |
           CLASS_NAME=${{ github.event.inputs.run_target }}
           TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
           REPORT_DIR="reports/${TIMESTAMP}"
           mkdir -p "$REPORT_DIR"
 
+          # Rename and copy emailable-report.html
           REPORT=$(find . -name emailable-report.html | head -n 1)
           if [ -f "$REPORT" ]; then
             NEW_REPORT_NAME="emailable-report_${CLASS_NAME}_${TIMESTAMP}.html"
@@ -49,7 +52,11 @@ jobs:
             echo "⚠️ emailable-report.html not found!"
           fi
 
+          # Copy results.txt
           cp results.txt "$REPORT_DIR/results.txt" || echo "results.txt not found"
+
+          # Set output so later steps can use it
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
 
       - name: Generate index.html
         run: |
@@ -74,8 +81,10 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git clone --branch gh-pages https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git gh-pages
+
           mkdir -p gh-pages/reports
           cp -r reports/* gh-pages/reports/
+
           cd gh-pages
           git add .
           git commit -m "Update reports at $(date)" || echo "No changes to commit"
