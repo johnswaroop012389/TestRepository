@@ -47,6 +47,8 @@ jobs:
           if REPORT_FILE=$(find . -name emailable-report.html | head -n1); then
             NEW_REPORT="${CLASS_NAME}_${DATE}_${TIME}.html"
             cp "$REPORT_FILE" "$REPORT_DIR/$NEW_REPORT"
+
+            cat "$REPORT_FILE" > "$REPORT_DIR/summary.txt"
           else
             echo "⚠️ emailable-report.html not found!"
           fi
