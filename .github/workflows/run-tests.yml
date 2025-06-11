@@ -27,32 +27,55 @@ jobs:
         run: |
           echo "running tests..."
           mvn test -Dsurefire.suiteXmlFiles=testng.xml -DrunTarget=${{ github.event.inputs.run_target }}
-      
+
       - name: Print results.txt to GitHub Actions UI
         run: |
-          cat results.txt
+          cat results.txt || echo "results.txt not found"
           echo "📁 Files in directory:"
           ls -la
 
-      - name: Rename emailable-report.html with class and timestamp
+      - name: Prepare report folder with timestamp
         run: |
+          CLASS_NAME=${{ github.event.inputs.run_target }}
+          TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+          REPORT_DIR="reports/${TIMESTAMP}"
+          mkdir -p "$REPORT_DIR"
+
           REPORT=$(find . -name emailable-report.html | head -n 1)
           if [ -f "$REPORT" ]; then
-            CLASS_NAME=${{ github.event.inputs.run_target }}
-            TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
             NEW_REPORT_NAME="emailable-report_${CLASS_NAME}_${TIMESTAMP}.html"
-            mkdir -p artifact-reports
-            cp "$REPORT" "artifact-reports/$NEW_REPORT_NAME"
-            echo "$NEW_REPORT_NAME" > artifact-reports/report-name.txt
+            cp "$REPORT" "$REPORT_DIR/$NEW_REPORT_NAME"
           else
-            echo "emailable-report.html not found!" > artifact-reports/report-name.txt
+            echo "⚠️ emailable-report.html not found!"
           fi
 
-      - name: Upload TestNG Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: testng-report
-          path: |
-            test-output/
-            results.txt
-            artifact-reports/
+          cp results.txt "$REPORT_DIR/results.txt" || echo "results.txt not found"
+
+      - name: Generate index.html
+        run: |
+          REPORTS_DIR=reports
+          INDEX_FILE=$REPORTS_DIR/index.html
+          echo "<html><head><title>Available Reports</title></head><body><h2>Test Reports</h2><ul>" > $INDEX_FILE
+          for dir in $REPORTS_DIR/*/; do
+            for report in "$dir"*.html; do
+              if [ -f "$report" ]; then
+                REPORT_NAME=$(basename "$report")
+                REL_PATH="${dir#reports/}$REPORT_NAME"
+                echo "<li><a href=\"$REL_PATH\">$REPORT_NAME</a></li>" >> $INDEX_FILE
+              fi
+            done
+          done
+          echo "</ul></body></html>" >> $INDEX_FILE
+
+      - name: Push reports to GitHub Pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git clone --branch gh-pages https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git gh-pages
+          cp -r reports/* gh-pages/reports/
+          cd gh-pages
+          git add .
+          git commit -m "Update reports at $(date)" || echo "No changes to commit"
+          git push
