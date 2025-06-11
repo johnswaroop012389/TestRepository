@@ -34,10 +34,25 @@ jobs:
           echo "📁 Files in directory:"
           ls -la
 
+      - name: Rename emailable-report.html with class and timestamp
+        run: |
+          REPORT=$(find . -name emailable-report.html | head -n 1)
+          if [ -f "$REPORT" ]; then
+            CLASS_NAME=${{ github.event.inputs.run_target }}
+            TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+            NEW_REPORT_NAME="emailable-report_${CLASS_NAME}_${TIMESTAMP}.html"
+            mkdir -p artifact-reports
+            cp "$REPORT" "artifact-reports/$NEW_REPORT_NAME"
+            echo "$NEW_REPORT_NAME" > artifact-reports/report-name.txt
+          else
+            echo "emailable-report.html not found!" > artifact-reports/report-name.txt
+          fi
+
       - name: Upload TestNG Report
         uses: actions/upload-artifact@v4
         with:
           name: testng-report
           path: |
             test-output/
-            results.txt    
+            results.txt
+            artifact-reports/
