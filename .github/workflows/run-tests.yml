@@ -39,8 +39,8 @@ jobs:
         id: report-setup
         run: |
           CLASS_NAME=${{ github.event.inputs.run_target }}
-          DATE=$(date +"%Y/%m/%d")
-          TIME=$(date +"%H:%M:%S")
+          DATE=$(date +"%Y-%m-%d")
+          TIME=$(date +"%H-%M-%S")
           REPORT_DIR="reports/${CLASS_NAME}_${DATE}_${TIME}"
           mkdir -p "$REPORT_DIR"
 
