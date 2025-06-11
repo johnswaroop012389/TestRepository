@@ -39,12 +39,13 @@ jobs:
         id: report-setup
         run: |
           CLASS_NAME=${{ github.event.inputs.run_target }}
-          TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-          REPORT_DIR="reports/${TIMESTAMP}"
+          DATE=$(date +"%Y/%m/%d")
+          TIME=$(date +"%H:%M:%S")
+          REPORT_DIR="reports/${CLASS_NAME}_date[${DATE}]_time[${TIME}]"
           mkdir -p "$REPORT_DIR"
 
           if REPORT_FILE=$(find . -name emailable-report.html | head -n1); then
-            NEW_REPORT="emailable-report_${CLASS_NAME}_${TIMESTAMP}.html"
+            NEW_REPORT="emailable-report_${CLASS_NAME}_date[${DATE}]_time[${TIME}].html"
             cp "$REPORT_FILE" "$REPORT_DIR/$NEW_REPORT"
           else
             echo "⚠️ emailable-report.html not found!"
@@ -52,7 +53,7 @@ jobs:
 
           cp results.txt "$REPORT_DIR/results.txt" || echo "⚠️ results.txt not found"
 
-          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+          echo "report_dir=$REPORT_DIR" >> $GITHUB_OUTPUT
 
       - name: Upload results and report as artifact
         uses: actions/upload-artifact@v4
