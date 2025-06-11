@@ -52,13 +52,21 @@ jobs:
             echo "⚠️ emailable-report.html not found!"
           fi
 
-          # Copy results.txt
+          # Copy results.txt to that folder (not used in gh-pages anymore)
           cp results.txt "$REPORT_DIR/results.txt" || echo "results.txt not found"
 
-          # Set output so later steps can use it
+          # Set output so later steps can use timestamp
           echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
 
-      - name: Generate index.html
+      - name: Upload results and report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: testng-report
+          path: |
+            results.txt
+            **/emailable-report*.html
+
+      - name: Generate index.html for gh-pages
         run: |
           REPORTS_DIR=reports
           INDEX_FILE=$REPORTS_DIR/index.html
@@ -74,7 +82,7 @@ jobs:
           done
           echo "</ul></body></html>" >> $INDEX_FILE
 
-      - name: Push reports to GitHub Pages
+      - name: Push HTML reports to GitHub Pages
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
