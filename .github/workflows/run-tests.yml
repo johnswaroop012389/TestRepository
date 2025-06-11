@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       run_target:
-        description: 'Which test to run (both, class1, class2)'
+        description: 'Which test to run (both, test1, test2)'
         required: true
         default: 'both'
 
@@ -25,7 +25,7 @@ jobs:
       - name: Run Maven Tests
         continue-on-error: true
         run: |
-          echo "running tests..."
+          echo "running tests for run_target=${{ github.event.inputs.run_target }}..."
           mvn test -Dsurefire.suiteXmlFiles=testng.xml -DrunTarget=${{ github.event.inputs.run_target }}
 
       - name: Print results.txt to GitHub Actions UI
@@ -35,7 +35,7 @@ jobs:
           echo "📁 Listing files in directory:"
           ls -la
 
-      - name: Prepare report folder with timestamp
+      - name: Prepare reports folder with timestamp
         id: report-setup
         run: |
           CLASS_NAME=${{ github.event.inputs.run_target }}
@@ -43,15 +43,14 @@ jobs:
           REPORT_DIR="reports/${TIMESTAMP}"
           mkdir -p "$REPORT_DIR"
 
-          REPORT=$(find . -name emailable-report.html | head -n 1)
-          if [ -f "$REPORT" ]; then
-            NEW_REPORT_NAME="emailable-report_${CLASS_NAME}_${TIMESTAMP}.html"
-            cp "$REPORT" "$REPORT_DIR/$NEW_REPORT_NAME"
+          if REPORT_FILE=$(find . -name emailable-report.html | head -n1); then
+            NEW_REPORT="emailable-report_${CLASS_NAME}_${TIMESTAMP}.html"
+            cp "$REPORT_FILE" "$REPORT_DIR/$NEW_REPORT"
           else
             echo "⚠️ emailable-report.html not found!"
           fi
 
-          cp results.txt "$REPORT_DIR/results.txt" || echo "results.txt not found"
+          cp results.txt "$REPORT_DIR/results.txt" || echo "⚠️ results.txt not found"
 
           echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
 
@@ -60,40 +59,40 @@ jobs:
         with:
           name: testng-report
           path: |
+            reports/**/*
             results.txt
-            **/emailable-report*.html
 
-      - name: Generate index.html for gh-pages (sorted)
+      - name: Generate top-level index.html for browser view
         run: |
-          REPORTS_DIR=reports
-          INDEX_FILE=$REPORTS_DIR/index.html
-          echo "<html><head><title>Available Reports</title></head><body><h2>Test Reports</h2><ul>" > $INDEX_FILE
-
-          # Collect and sort folders in reverse (newest first)
-          find $REPORTS_DIR -mindepth 1 -maxdepth 1 -type d | sort -r | while read -r dir; do
+          REPORTS_DIR="reports"
+          INDEX_FILE="$REPORTS_DIR/index.html"
+          echo "<!DOCTYPE html><html><head><meta charset='utf-8'><title>Test Reports</title></head><body><h2>Test Reports</h2><ul>" > "$INDEX_FILE"
+          find "$REPORTS_DIR" -mindepth 1 -maxdepth 1 -type d | sort -r | while read -r dir; do
+            TIMESTAMP=$(basename "$dir")
             for report in "$dir"/*.html; do
-              if [ -f "$report" ]; then
-                REPORT_NAME=$(basename "$report")
-                REL_PATH="${dir#reports/}/$REPORT_NAME"
-                echo "<li><a href=\"$REL_PATH\">$REPORT_NAME</a></li>" >> $INDEX_FILE
-              fi
+              [ -f "$report" ] || continue
+              NAME=$(basename "$report")
+              echo "<li><a href=\"${TIMESTAMP}/${NAME}\">${NAME}</a></li>" >> "$INDEX_FILE"
             done
           done
+          echo "</ul></body></html>" >> "$INDEX_FILE"
 
-          echo "</ul></body></html>" >> $INDEX_FILE
-
-      - name: Push HTML reports to GitHub Pages
+      - name: Push reports to gh-pages
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git clone --branch gh-pages https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git gh-pages
 
+          git clone --depth=1 --branch gh-pages https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git gh-pages
           mkdir -p gh-pages/reports
+
           cp -r reports/* gh-pages/reports/
+
+          # Prevent Jekyll from ignoring folders
+          touch gh-pages/.nojekyll
 
           cd gh-pages
           git add .
-          git commit -m "Update reports at $(date)" || echo "No changes to commit"
+          git commit -m "Update report pages at $(date +'%Y-%m-%d %H:%M:%S')" || echo "⚠️ Nothing new to commit"
           git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git gh-pages
