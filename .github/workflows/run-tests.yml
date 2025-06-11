@@ -43,7 +43,6 @@ jobs:
           REPORT_DIR="reports/${TIMESTAMP}"
           mkdir -p "$REPORT_DIR"
 
-          # Rename and copy emailable-report.html
           REPORT=$(find . -name emailable-report.html | head -n 1)
           if [ -f "$REPORT" ]; then
             NEW_REPORT_NAME="emailable-report_${CLASS_NAME}_${TIMESTAMP}.html"
@@ -52,10 +51,8 @@ jobs:
             echo "⚠️ emailable-report.html not found!"
           fi
 
-          # Copy results.txt to that folder (not used in gh-pages anymore)
           cp results.txt "$REPORT_DIR/results.txt" || echo "results.txt not found"
 
-          # Set output so later steps can use timestamp
           echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
 
       - name: Upload results and report as artifact
@@ -66,20 +63,23 @@ jobs:
             results.txt
             **/emailable-report*.html
 
-      - name: Generate index.html for gh-pages
+      - name: Generate index.html for gh-pages (sorted)
         run: |
           REPORTS_DIR=reports
           INDEX_FILE=$REPORTS_DIR/index.html
           echo "<html><head><title>Available Reports</title></head><body><h2>Test Reports</h2><ul>" > $INDEX_FILE
-          for dir in $REPORTS_DIR/*/; do
-            for report in "$dir"*.html; do
+
+          # Collect and sort folders in reverse (newest first)
+          find $REPORTS_DIR -mindepth 1 -maxdepth 1 -type d | sort -r | while read -r dir; do
+            for report in "$dir"/*.html; do
               if [ -f "$report" ]; then
                 REPORT_NAME=$(basename "$report")
-                REL_PATH="${dir#reports/}$REPORT_NAME"
+                REL_PATH="${dir#reports/}/$REPORT_NAME"
                 echo "<li><a href=\"$REL_PATH\">$REPORT_NAME</a></li>" >> $INDEX_FILE
               fi
             done
           done
+
           echo "</ul></body></html>" >> $INDEX_FILE
 
       - name: Push HTML reports to GitHub Pages
