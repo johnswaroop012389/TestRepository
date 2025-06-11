@@ -79,14 +79,14 @@ public class BaseTest {
 
 			switch (runTarget) {
 			case "test1":
-				new TC01(writer).run(driver);
+				new TC01().run(driver);
 				break;
 			case "test2":
-				new TC02(writer).run(driver);
+				new TC02().run(driver);
 				break;
 			case "all":
-				new TC01(writer).run(driver);
-				new TC02(writer).run(driver);
+				new TC01().run(driver);
+				new TC02().run(driver);
 				break;
 			default:
 				PrintWriter errorWriter = new PrintWriter(new FileWriter("result.txt", true));
