@@ -41,11 +41,11 @@ jobs:
           CLASS_NAME=${{ github.event.inputs.run_target }}
           DATE=$(date +"%Y/%m/%d")
           TIME=$(date +"%H:%M:%S")
-          REPORT_DIR="reports/${CLASS_NAME}_date[${DATE}]_time[${TIME}]"
+          REPORT_DIR="reports/${CLASS_NAME}_${DATE}_${TIME}"
           mkdir -p "$REPORT_DIR"
 
           if REPORT_FILE=$(find . -name emailable-report.html | head -n1); then
-            NEW_REPORT="emailable-report_${CLASS_NAME}_date[${DATE}]_time[${TIME}].html"
+            NEW_REPORT="${CLASS_NAME}_${DATE}_${TIME}.html"
             cp "$REPORT_FILE" "$REPORT_DIR/$NEW_REPORT"
           else
             echo "⚠️ emailable-report.html not found!"
