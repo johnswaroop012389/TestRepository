@@ -47,7 +47,7 @@ public class BaseTest {
 		TestLogger
 				.logPass("✅ Starting Test Case: " + result.getTestClass().getRealClass().getSimpleName()");
 
-		TestLogger.logStep("Launche https://uat.qaconnector.com/Fintech/tenantLogin Successfully", () -> {
+		TestLogger.logStep("Launched https://uat.qaconnector.com/Fintech/tenantLogin Successfully", () -> {
 			driver.get("https://uat.qaconnector.com/Fintech/tenantLogin");
 		});
 
