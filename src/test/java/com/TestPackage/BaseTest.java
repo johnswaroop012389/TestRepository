@@ -1,6 +1,5 @@
 package com.TestPackage;
 
-import java.io.FileWriter;
 import java.io.PrintWriter;
 
 import org.openqa.selenium.By;
@@ -10,7 +9,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.*;
 
 import org.testng.Assert;
+import org.testng.SkipException;
 
+@Listeners(ConditionalTestFilter.class)
 public class BaseTest {
 	public static WebDriver driver;
 	public static PrintWriter writer;
@@ -32,28 +33,28 @@ public class BaseTest {
 
 		driver = new ChromeDriver(options);
 		driver.manage().window().maximize();
-		
-		//Launch Url 
+
+		// Launch Url
 		TestLogger.logStep("Launched" + " https://uat.qaconnector.com/Fintech/tenantLogin " + "Successufully", () -> {
 			driver.get("https://uat.qaconnector.com/Fintech/tenantLogin");
 		});
 
-		// Enter username 
+		// Enter username
 		TestLogger.logStep("Username Entered Successfully", () -> {
 			driver.findElement(By.name("user_name")).sendKeys("amith.nadig");
 		});
-		
+
 		// Enter password
 		TestLogger.logStep("Password Entered Successfully", () -> {
 			driver.findElement(By.name("password")).sendKeys("ViratKohli@123");
 		});
-		
-		// Click on login button 
+
+		// Click on login button
 		TestLogger.logStep("Clicked on Login Successfully", () -> {
 			driver.findElement(By.id("Login_loginbtn__7Tj03")).click();
 		});
 		Thread.sleep(2000);
-		
+
 		// Page loaded successfully
 		TestLogger.logStep("Homepage Loaded Successfully", () -> {
 			Assert.assertTrue(driver.findElements(By.className("landingPage_companyName__2RiNM")).size() > 0,
@@ -72,28 +73,30 @@ public class BaseTest {
 		}
 	}
 
-	@Test(enabled = true)
+	@Test
 	public void runTC01() {
-		if (shouldRun("test1") || shouldRun("all")) {
-			writer.println("<!-- 🧪 Starting Test Case: TC01 -->");
-			try {
-				new TC01().run(driver);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	    if (!shouldRun("test1") && !shouldRun("all")) {
+	        throw new SkipException("Skipping TC01 based on runTarget");
+	    }
+	    writer.println("<!-- 🧪 Starting Test Case: TC01 -->");
+	    try {
+	        new TC01().run(driver);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 
-	@Test(enabled = true)
+	@Test
 	public void runTC02() {
-		if (shouldRun("test2") || shouldRun("all")) {
-			writer.println("<!-- 🧪 Starting Test Case: TC02 -->");
-			try {
-				new TC02().run(driver);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	    if (!shouldRun("test2") && !shouldRun("all")) {
+	        throw new SkipException("Skipping TC02 based on runTarget");
+	    }
+	    writer.println("<!-- 🧪 Starting Test Case: TC02 -->");
+	    try {
+	        new TC02().run(driver);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	private boolean shouldRun(String target) {
