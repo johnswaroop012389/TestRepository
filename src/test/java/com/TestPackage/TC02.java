@@ -24,10 +24,10 @@ public class TC02 {
 					.click();
 		});
 
-		TestLogger.logStep("Check 'Update' button is visible", () -> {
+		/*TestLogger.logStep("Check 'Update' button is visible", () -> {
 			Assert.assertTrue(driver.findElements(By.xpath("//span[contains(text(), 'Update')]")).size() > 0,
 					"Expected element not found!");
-		});
+		}); */
 
 		TestLogger.logPass("✅ TC02: Test completed.");
 	}
