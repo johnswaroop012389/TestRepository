@@ -3,14 +3,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-@Test
-public class TC01 {
+public class TC01 extends BaseTest{
 
-    public void run(WebDriver driver) throws Exception {
+	@Test
+    public void run() throws Exception {
+		writer.println("<!-- 🧪 Starting Test Case: TC01 -->");
     	TestLogger.logPass("🚀 TC01: Test started.");
     	Map<String, String> validations = new LinkedHashMap<>();
     	validations.put("Dashboard is visible", "//span[contains(text(), 'Dashboard')]");
