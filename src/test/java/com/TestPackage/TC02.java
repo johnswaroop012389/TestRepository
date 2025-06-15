@@ -5,15 +5,12 @@ import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TC02 extends BaseTest {
 
 	@Test
-	public void run() throws Exception {
-		writer.println("<!-- 🧪 Starting Test Case: TC02 -->");
-		TestLogger.logPass("🚀 TC02: Test started.");
+	public void runTC02() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
 		TestLogger.logStep("Click on Flood Renewals", () -> {
@@ -25,12 +22,12 @@ public class TC02 extends BaseTest {
 			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(), 'Edit Project')]")))
 					.click();
 		});
-
-		/*TestLogger.logStep("Check 'Update' button is visible", () -> {
-			Assert.assertTrue(driver.findElements(By.xpath("//span[contains(text(), 'Update')]")).size() > 0,
-					"Expected element not found!");
-		}); */
-
-		TestLogger.logPass("✅ TC02: Test completed.");
+		
+		TestLogger.logStep("Update Button is Visible", () -> {
+			boolean isPresent = driver.findElements(By.xpath("//span[text()='Update']")).size() > 0;
+			if (!isPresent) {
+				throw new RuntimeException(); 
+			}
+		});
 	}
 }
