@@ -25,6 +25,7 @@ public class TestLogger {
 			logPass(message);
 		} catch (Exception e) {
 			logFail(message);
+			throw new RuntimeException(e); // Rethrow to fail the test
 		}
 	}
 
