@@ -20,7 +20,7 @@ public class BaseTest {
 
 	@BeforeSuite
 	public void initializeWriter() throws Exception {
-		writer = new PrintWriter(new FileOutputStream("results.txt")); // overwrite mode
+		writer = new PrintWriter(new FileOutputStream("results.txt"), true); // overwrite mode
 		TestLogger.setWriter(writer);
 	}
 
@@ -38,18 +38,16 @@ public class BaseTest {
 		driver = new ChromeDriver(options);
 		driver.manage().window().maximize();
 		writer.println("***Starting New Test Execution***");
-		TestLogger.logStep("Browser launched", () -> {
-		});
+		TestLogger.logPass("Browser launched");
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
 	@BeforeMethod
 	public void setup(ITestResult result) throws Exception {
-		TestLogger.logStep(
-				"<!-- ✅ Starting Test Case: " + result.getTestClass().getRealClass().getSimpleName() + " -->", () -> {
-				});
+		TestLogger
+				.logPass("<!-- ✅ Starting Test Case: " + result.getTestClass().getRealClass().getSimpleName() + " -->");
 
-		TestLogger.logStep("Launched https://uat.qaconnector.com/Fintech/tenantLogin Successfully", () -> {
+		TestLogger.logStep("Launche https://uat.qaconnector.com/Fintech/tenantLogin Successfully", () -> {
 			driver.get("https://uat.qaconnector.com/Fintech/tenantLogin");
 		});
 
@@ -77,9 +75,7 @@ public class BaseTest {
 
 	@AfterMethod
 	public void endTest(ITestResult result) throws Exception {
-		TestLogger.logStep("<!-- ✅ Ending Test Case: " + result.getTestClass().getRealClass().getSimpleName() + " -->",
-				() -> {
-				});
+		TestLogger.logPass("<!-- ✅ Ending Test Case: " + result.getTestClass().getRealClass().getSimpleName() + " -->");
 	}
 
 	@AfterClass
