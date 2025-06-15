@@ -1,0 +1,30 @@
+***Starting New Test Execution***
+[PASS] Browser launched
+✅ Starting Test Case: TC01
+[PASS] Launched https://uat.qaconnector.com/Fintech/tenantLogin Successfully
+[PASS] Username Entered Successfully
+[PASS] Password Entered Successfully
+[PASS] Clicked on Login Successfully
+[PASS] Homepage Loaded Successfully
+[PASS] Dashboard is visible
+[PASS] Projects is visible
+[PASS] Test Bank is visible
+[PASS] Test Plans is visible
+[PASS] Test Execution is visible
+[PASS] Defects is visible
+[PASS] Admin is visible
+✅ Ending Test Case: TC01
+[PASS] Browser closed
+***Starting New Test Execution***
+[PASS] Browser launched
+✅ Starting Test Case: TC02
+[PASS] Launched https://uat.qaconnector.com/Fintech/tenantLogin Successfully
+[PASS] Username Entered Successfully
+[PASS] Password Entered Successfully
+[PASS] Clicked on Login Successfully
+[PASS] Homepage Loaded Successfully
+[PASS] Click on Flood Renewals
+[PASS] Click on Edit Project
+[FAIL] Update Button is Visible
+✅ Ending Test Case: TC02
+[PASS] Browser closed
