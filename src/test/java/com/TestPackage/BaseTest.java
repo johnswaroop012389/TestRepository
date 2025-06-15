@@ -85,7 +85,9 @@ public class BaseTest {
 				new TC02().run(driver);
 				break;
 			case "all":
+				writer.println("<!-- 🧪 Starting Test Case: TC01 -->");
 				new TC01().run(driver);
+				writer.println("<!-- 🧪 Starting Test Case: TC02 -->");
 				new TC02().run(driver);
 				break;
 			default:
