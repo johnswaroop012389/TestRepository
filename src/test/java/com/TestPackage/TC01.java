@@ -9,9 +9,7 @@ import org.testng.annotations.Test;
 public class TC01 extends BaseTest{
 
 	@Test
-    public void run() throws Exception {
-		writer.println("<!-- 🧪 Starting Test Case: TC01 -->");
-    	TestLogger.logPass("🚀 TC01: Test started.");
+    public void runTC01() throws Exception {
     	Map<String, String> validations = new LinkedHashMap<>();
     	validations.put("Dashboard is visible", "//span[contains(text(), 'Dashboard')]");
     	validations.put("Projects is visible", "//span[contains(text(), 'Projects')]");
@@ -29,6 +27,5 @@ public class TC01 extends BaseTest{
     	        Assert.assertTrue(driver.findElements(By.xpath(xpath)).size() > 0, "Expected element not found: " + label);
     	    });
     	}
-    	TestLogger.logPass("✅ TC01: Test completed.");
     }
 }
