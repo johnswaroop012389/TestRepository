@@ -26,7 +26,7 @@ jobs:
         continue-on-error: true
         run: |
           echo "running tests for run_target=${{ github.event.inputs.run_target }}..."
-          mvn test -Dsurefire.suiteXmlFiles=testng.xml -DrunTarget=${{ github.event.inputs.run_target }}
+          mvn test -DrunTarget=${{ github.event.inputs.run_target }}
 
       - name: Print results.txt to GitHub Actions UI
         run: |
