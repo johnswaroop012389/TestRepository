@@ -1,0 +1,9 @@
+[PASS] Launched https://uat.qaconnector.com/Fintech/tenantLogin Successfully
+[PASS] Username Entered Successfully
+[PASS] Password Entered Successfully
+[PASS] Clicked on Login Successfully
+[PASS] Homepage Loaded Successfully
+[PASS] Click on Flood Renewals
+[PASS] Click on Edit Project
+[FAIL] Update Button is Visible
+[PASS] Browser closed
