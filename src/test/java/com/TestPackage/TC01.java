@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
+@Test
 public class TC01 {
 
     public void run(WebDriver driver) throws Exception {
