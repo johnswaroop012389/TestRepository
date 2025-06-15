@@ -72,34 +72,33 @@ public class BaseTest {
 		}
 	}
 
-	@Test
-	public void triggerTests() {
-		try {
-			runTarget = System.getProperty("runTarget", "all").toLowerCase();
-
-			switch (runTarget) {
-			case "test1":
+	@Test(enabled = true)
+	public void runTC01() {
+		if (shouldRun("test1") || shouldRun("all")) {
+			writer.println("<!-- 🧪 Starting Test Case: TC01 -->");
+			try {
 				new TC01().run(driver);
-				break;
-			case "test2":
-				new TC02().run(driver);
-				break;
-			case "all":
-				writer.println("<!-- 🧪 Starting Test Case: TC01 -->");
-				new TC01().run(driver);
-				writer.println("<!-- 🧪 Starting Test Case: TC02 -->");
-				new TC02().run(driver);
-				break;
-			default:
-				PrintWriter errorWriter = new PrintWriter(new FileWriter("result.txt", true));
-				errorWriter.println("❌ Invalid input: " + runTarget);
-				errorWriter.println("Please use one of: test1, test2, all");
-				errorWriter.close();
-				break;
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			writer.println(e);
 		}
+	}
+
+	@Test(enabled = true)
+	public void runTC02() {
+		if (shouldRun("test2") || shouldRun("all")) {
+			writer.println("<!-- 🧪 Starting Test Case: TC02 -->");
+			try {
+				new TC02().run(driver);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private boolean shouldRun(String target) {
+		String runTarget = System.getProperty("runTarget", "all").toLowerCase();
+		return runTarget.equals(target) || runTarget.equals("all");
 	}
 
 }
