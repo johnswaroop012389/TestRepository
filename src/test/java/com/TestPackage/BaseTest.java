@@ -44,7 +44,7 @@ public class BaseTest {
 
 	@BeforeMethod
 	public void setup(ITestResult result) throws Exception {
-		writer.println("✅ Starting Test Case: " + result.getTestClass().getRealClass().getSimpleName());
+		TestLogger.logPass("✅ Starting Test Case: " + result.getTestClass().getRealClass().getSimpleName());
 
 		TestLogger.logStep("Launched https://uat.qaconnector.com/Fintech/tenantLogin Successfully", () -> {
 			driver.get("https://uat.qaconnector.com/Fintech/tenantLogin");
@@ -74,7 +74,7 @@ public class BaseTest {
 
 	@AfterMethod
 	public void endTest(ITestResult result) throws Exception {
-		writer.println("✅ Ending Test Case: " + result.getTestClass().getRealClass().getSimpleName());
+		TestLogger.logPass("✅ Ending Test Case: " + result.getTestClass().getRealClass().getSimpleName());
 	}
 
 	@AfterClass
