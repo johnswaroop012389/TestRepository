@@ -1,0 +1,4 @@
+***Starting New Test Execution***
+[PASS] Browser launched
+[PASS] ✅ Starting Test Case: TC02
+[FAIL] Launched https://uat.qaconnector.com/Fintech/tenantLogin Successfully
